@@ -12,15 +12,39 @@ class MyApppp extends StatelessWidget {
       home: Scaffold(
         backgroundColor: Colors.blueGrey,
         body: SafeArea(
-          child: Container(
-            height: 100,
-            width: 100,
-            margin: EdgeInsets.fromLTRB(40, 80, 60, 10),
-            padding: EdgeInsets.symmetric(vertical: 40, horizontal: 0),
-            color: Colors.white,
-            child: Text('hello'),
-          ),
-        ),
+            child: Column(
+          mainAxisAlignment: MainAxisAlignment
+              .center, // this is very imp, rather than changing spacing individually u can do it at once
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Container(
+              height: 100,
+              width: 100,
+              margin: EdgeInsets.fromLTRB(40, 80, 60, 0),
+              padding: EdgeInsets.symmetric(vertical: 40, horizontal: 0),
+              child: Image(
+                image: AssetImage('images/balls.jpg'),
+              ),
+            ),
+            Container(
+              width: 100,
+              height: 80,
+              color: Colors.blue,
+              child: Text('hello 2'),
+              padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Container(
+              width: 100,
+              height: 80,
+              color: Colors.red,
+              child: Text('hello 2'),
+              padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+            )
+          ],
+        )),
       ),
     );
   }
