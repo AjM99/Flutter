@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'questions.dart';
+import 'brain.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
+
+Brain brain = Brain();
 
 void main() => runApp(Quiz_App());
 
@@ -25,20 +30,30 @@ class QuizPage extends StatefulWidget {
 }
 
 class _QuizPageState extends State<QuizPage> {
-  List<Icon> score = [
-    Icon(
-      Icons.check_circle,
-      color: Colors.green,
-    ),
-    Icon(
-      Icons.close_outlined,
-      color: Colors.red,
-    ),
-    Icon(
-      Icons.check_circle,
-      color: Colors.green,
-    ),
+  List<Icon> score = [];
+  /*List<String> question = [
+    "Anuj is a god tier programmer",
+    "Life is sad",
+    "U can change your fate",
+    "Isekai is real",
+    "One piece is best anime/Tv series of all time",
   ];
+  List<bool> answers = [false, true, false, true, true];
+  Question q1 = Question(q: "Anuj is a god tier programmer", a: false);*/
+  void endgame() {
+    setState(() {
+      if (brain.End() == true) {
+        Alert(
+          context: context,
+          title: 'Finished!',
+          desc: "You have reached the end of the quiz.Press cancel to reset",
+        ).show();
+        brain.reset();
+        score = [];
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -51,7 +66,7 @@ class _QuizPageState extends State<QuizPage> {
             padding: EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                'This is where the question text will go.',
+                brain.questionBankAccess(),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 25.0,
@@ -76,13 +91,24 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
+                bool correctAns = brain.questionBankAccess2();
+                endgame();
+                if (correctAns == true) {
+                  print('right');
+                  score.add(Icon(
+                    Icons.check_circle,
+                    color: Colors.green,
+                  ));
+                } else {
+                  print('wrong');
+                  score.add(Icon(
+                    Icons.close_outlined,
+                    color: Colors.red,
+                  ));
+                }
+
                 setState(() {
-                  score.add(
-                    Icon(
-                      Icons.check_circle,
-                      color: Colors.green,
-                    ),
-                  );
+                  brain.nextQuestion();
                 });
               },
             ),
@@ -103,13 +129,23 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
+                bool correctAns = brain.questionBankAccess2();
+                endgame();
+                if (correctAns == false) {
+                  print('rightt');
+                  score.add(Icon(
+                    Icons.check_circle,
+                    color: Colors.green,
+                  ));
+                } else {
+                  print('wrong');
+                  score.add(Icon(
+                    Icons.close_outlined,
+                    color: Colors.red,
+                  ));
+                }
                 setState(() {
-                  score.add(
-                    Icon(
-                      Icons.close_outlined,
-                      color: Colors.red,
-                    ),
-                  );
+                  brain.nextQuestion();
                 });
               },
             ),
